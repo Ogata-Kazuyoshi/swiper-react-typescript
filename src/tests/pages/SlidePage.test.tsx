@@ -15,17 +15,19 @@ interface SwiperProps {
     spaceBetween:number;
 }
 
-interface SwiperSlideProps {
-    children: ReactNode;
-}
+// interface SwiperSlideProps {
+//     children: ReactNode;
+// }
 
-// Swiper と SwiperSlide コンポーネントをモックします
+// Swiper と SwiperSlide コンポーネントをモック。ただし、SwiperSlideコンポーネントのPropsチェックをしないならば、ただただモックしてあげるだけで良いので（Spy不要）、コールバック関数は不要
+
 vi.mock('swiper/react', () => {
     const OriginalModule = vi.importActual('swiper/react');
     return {
         ...OriginalModule,
         Swiper: vi.fn(({ children }: SwiperProps) => <div data-testid="mock-swiper">{children}</div>),
-        SwiperSlide: vi.fn(({ children }: SwiperSlideProps) => <div >{children}</div>),
+        // SwiperSlide: vi.fn(({ children }: SwiperSlideProps) => <div >{children}</div>),
+        SwiperSlide: vi.fn(),
     };
 });
 
