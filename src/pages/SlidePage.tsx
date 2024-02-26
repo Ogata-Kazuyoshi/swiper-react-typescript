@@ -20,7 +20,7 @@ export const SlidePage = () =>{
         <Swiper
             pagination={{clickable:true}}
             modules={[Pagination]}
-            // spaceBetween={50}
+            spaceBetween={50}
             slidesPerView={3}
             // onSlideChange={() => console.log('slide change')}
             // onSwiper={(swiper) => console.log(swiper)}
@@ -34,7 +34,6 @@ export const SlidePage = () =>{
             <SwiperSlide><img style={{width:'300px'}} src={image7} alt="image7"/></SwiperSlide>
             <SwiperSlide><img style={{width:'300px'}} src={image8} alt="image8"/></SwiperSlide>
             <SwiperSlide><img style={{width:'300px'}} src={image9} alt="image9"/></SwiperSlide>
-            ...
         </Swiper>
     </>
 }

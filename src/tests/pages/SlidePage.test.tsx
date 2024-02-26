@@ -4,13 +4,15 @@ import {expect, vi} from "vitest";
 import {ReactNode} from "react";
 import {Swiper} from "swiper/react";
 import {Pagination} from "swiper/modules";
+import {SwiperModule} from "swiper/types";
 
 // Swiper コンポーネントと SwiperSlide コンポーネントの props の型を定義
 interface SwiperProps {
     children: ReactNode;
     pagination: { clickable: boolean };
-    modules: any[];
+    modules: SwiperModule[];
     slidesPerView: number;
+    spaceBetween:number;
 }
 
 interface SwiperSlideProps {
@@ -45,6 +47,7 @@ describe('SlidePage.tsxのテスト',()=>{
                 pagination: { clickable: true },
                 modules: [Pagination],
                 slidesPerView: 3,
+                spaceBetween:50,
             }),
             //Reactコンポーネントが内部的に別の引数を受け取っている。その場合、下記がないと別の引数によりテストエラーとなるが、上記以外のPropsはなんでも良いよと伝えるために必要
             expect.anything(),
