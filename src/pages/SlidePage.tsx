@@ -21,8 +21,6 @@ export const SlidePage = () => {
       <Swiper
         pagination={{ clickable: true }}
         modules={[Pagination]}
-        // spaceBetween={50}
-        // slidesPerView={3}
         slidesPerView={2} // 自動でスライドの幅を調整
         centeredSlides={true} // アクティブなスライドを中央に配置
         spaceBetween={50} // スライド間のスペース

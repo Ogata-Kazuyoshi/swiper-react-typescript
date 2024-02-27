@@ -25,7 +25,7 @@ describe('SlidePage.tsxのテスト',()=>{
     test('Swiperコンポーネントに正しいPropsが渡されている',()=>{
         render(<SlidePage/>)
         // Swiper コンポーネントがレンダリングされているか確認
-        // expect(screen.getByTestId('mock-swiper')).toBeInTheDocument();
+        expect(screen.getByTestId('mock-swiper')).toBeInTheDocument();
 
         // Swiper コンポーネントに渡された props を検証
 
@@ -34,15 +34,15 @@ describe('SlidePage.tsxのテスト',()=>{
             expect.objectContaining({
                 pagination: { clickable: true },
                 modules: [Pagination],
-                slidesPerView: 3,
+                slidesPerView: 2,
                 spaceBetween:50,
-
+                centeredSlides:true
             }),
             //第3引数に勝手に{}が入ってきてしまうので、テスト側にも入れておく
             //Reactコンポーネントが内部的に別の引数を受け取っている。その場合、下記がないと別の引数によりテストエラーとなるが、上記以外のPropsはなんでも良いよと伝えるために必要
             {}
         );
-        vi.resetAllMocks()
+        vi.restoreAllMocks()
     })
 
     test('各画像がレンダリングされている',()=>{
