@@ -1,23 +1,9 @@
 import {render,screen} from "@testing-library/react";
 import {SlidePage} from "../../pages/SlidePage.tsx";
 import {expect, vi} from "vitest";
-// import {ReactNode} from "react";
-import {Swiper} from "swiper/react";
+import {Swiper, SwiperProps, SwiperSlideProps} from "swiper/react";
 import {Pagination} from "swiper/modules";
-// import {SwiperModule} from "swiper/types";
 
-// Swiper コンポーネントと SwiperSlide コンポーネントの props の型を定義
-// interface SwiperProps {
-//     children: ReactNode;
-//     pagination: { clickable: boolean };
-//     modules: SwiperModule[];
-//     slidesPerView: number;
-//     spaceBetween:number;
-// }
-
-// interface SwiperSlideProps {
-//     children: ReactNode;
-// }
 
 // Swiper と SwiperSlide コンポーネントをモック。ただし、SwiperSlideコンポーネントのPropsチェックをしないならば、ただただモックしてあげるだけで良いので（Spy不要）、コールバック関数は不要
 
@@ -25,10 +11,8 @@ vi.mock('swiper/react', () => {
     const OriginalModule = vi.importActual('swiper/react');
     return {
         ...OriginalModule,
-        // Swiper: vi.fn(({ children }: SwiperProps) => <div data-testid="mock-swiper">{children}</div>),
-        Swiper: vi.fn(),
-        // SwiperSlide: vi.fn(({ children }: SwiperSlideProps) => <div >{children}</div>),
-        SwiperSlide: vi.fn(),
+        Swiper: vi.fn(({ children }: SwiperProps) => <div data-testid="mock-swiper">{children}</div>),
+        SwiperSlide: vi.fn(({ children }: SwiperSlideProps) => children),
     };
 });
 
@@ -44,17 +28,21 @@ describe('SlidePage.tsxのテスト',()=>{
         // expect(screen.getByTestId('mock-swiper')).toBeInTheDocument();
 
         // Swiper コンポーネントに渡された props を検証
-        const swiperMock = vi.mocked(Swiper);
-        expect(swiperMock).toHaveBeenCalledWith(
+
+        expect(Swiper).toHaveBeenNthCalledWith(
+            1,
             expect.objectContaining({
                 pagination: { clickable: true },
                 modules: [Pagination],
                 slidesPerView: 3,
                 spaceBetween:50,
+
             }),
+            //第3引数に勝手に{}が入ってきてしまうので、テスト側にも入れておく
             //Reactコンポーネントが内部的に別の引数を受け取っている。その場合、下記がないと別の引数によりテストエラーとなるが、上記以外のPropsはなんでも良いよと伝えるために必要
-            expect.anything(),
+            {}
         );
+        vi.resetAllMocks()
     })
 
     test('各画像がレンダリングされている',()=>{
